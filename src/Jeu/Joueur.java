@@ -2,6 +2,7 @@ package Jeu;
 
 //imports necessaires
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class Joueur {
@@ -11,6 +12,8 @@ public class Joueur {
     private Color couleur;
     private double solde;
     private ImageIcon photo;
+    private LesCartes mesC;
+    private Lots ll;
     
     //accesseurs
     public void setPseudo(String p) { 
@@ -28,6 +31,10 @@ public class Joueur {
     public void setSolde(double s) { 
         this.solde = s; 
     }
+    
+    public void setMesCartes(LesCartes c) {
+        this.mesC = c;
+    }
 
     public String getPseudo() { 
         return this.pseudo;  
@@ -44,16 +51,22 @@ public class Joueur {
     public ImageIcon getPhoto() { 
         return this.photo;
     }
+    
+    public LesCartes getMesCartes() {
+        return this.mesC;
+    }
 
     //constructeur par defaut
     public Joueur() {
         this.setPseudo("");
         this.setCouleur(Color.gray);
         this.setSolde(20);
+        
+        this.mesC = new LesCartes();
         //this.photo = new ImageIcon("/GestionJoueur/joueurDefaut.png");
         try{
             this.photo = new ImageIcon(getClass().getResource("../img/joueurDefaut.png"));
-        } catch(Exception e) {
+        } catch(NullPointerException e) {
             this.photo = new ImageIcon(getClass().getResource(""));
         }
     }
@@ -63,10 +76,11 @@ public class Joueur {
         this.setPseudo(p);
         this.couleur = Color.gray;
         this.solde = 20;
+        this.mesC = new LesCartes();
         //this.photo = new ImageIcon("/GestionJoueur/joueurDefaut.png");
         try{
             this.photo = new ImageIcon(getClass().getResource("../img/joueurDefaut.png"));
-        } catch(Exception e) {
+        } catch(NullPointerException e) {
             this.photo = new ImageIcon(getClass().getResource(""));
         }
     }
@@ -76,6 +90,16 @@ public class Joueur {
         String res= "\nJoueur " + this.getPseudo();
         res+= "\nCouleur " + this.getCouleur();
         res+= "\nSolde " + this.getSolde();
+        res+= "\nNombre de cartes " + this.getMesCartes().getTaille();
         return res;
     }
+    
+    //methode qui permet d'acheter une carte == l'ajouter a la liste des cartes du joueur
+    public void acheterCarte(CarteLoto c) {
+        if(this.getSolde() >= 5) {
+            this.mesC.ajouteCarte(c);
+            this.setSolde(this.getSolde() - 5);
+        }
+    }
+    
 }

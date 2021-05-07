@@ -18,6 +18,11 @@ public class LesCartes {
         return this.lst.size();
     }
     
+    //methode pour effacer le contenu de l'ArrayList
+    public void effacerTout() {
+        this.lst.removeAll(lst);
+    }
+    
     //methode permettant la restitution d'une CarteLoto d'index i de l'ArrayList
     public CarteLoto getCarte(int i) {
         return this.lst.get(i);
